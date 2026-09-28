@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"7a4cbf20df90643aa27453815d1d0ec9","name":"Verify user login through the API","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}},{"uid":"3ca8c29ac7b973a75f183c31284865f4","name":"Manage a temporary user account","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
