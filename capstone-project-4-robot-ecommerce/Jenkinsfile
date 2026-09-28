@@ -1,0 +1,43 @@
+pipeline {
+    agent { label 'windows' }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install dependencies') {
+            steps {
+                bat 'py -m venv .venv'
+                bat '.venv\\Scripts\\python.exe -m pip install -r capstone-project-4-robot-ecommerce\\requirements.txt'
+            }
+        }
+
+        stage('Run Robot tests') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'ae-demo-account',
+                        usernameVariable: 'AE_TEST_EMAIL',
+                        passwordVariable: 'AE_TEST_PASSWORD'
+                    )
+                ]) {
+                    dir('capstone-project-4-robot-ecommerce') {
+                        bat '..\\.venv\\Scripts\\python.exe -m robot --outputdir evidence\\reports suites'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts(
+                artifacts: 'capstone-project-4-robot-ecommerce/evidence/reports/**',
+                allowEmptyArchive: true
+            )
+        }
+    }
+}
